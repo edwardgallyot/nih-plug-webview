@@ -189,7 +189,7 @@ impl Editor for WebViewEditor {
                 if let Ok(json_value) = serde_json::from_str(&msg) {
                     context.events.push_back(WebviewEvent::JSON(json_value));
                 } else {
-                    panic!("Invalid JSON from web view: {}.", msg);
+                    dbg!("Invalid JSON from webview");
                 }
             })
             .with_background_color(self.background_color);
