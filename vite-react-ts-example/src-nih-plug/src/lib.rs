@@ -52,7 +52,7 @@ impl Default for ReactGainParams {
                     factor: FloatRange::gain_skew_factor(-60.0, 0.0),
                 },
             )
-            .with_smoother(SmoothingStyle::Logarithmic(50.0))
+            .with_smoother(SmoothingStyle::Linear(40.0))
             .with_unit(" dB")
             .with_value_to_string(formatters::v2s_f32_gain_to_db(2))
             .with_string_to_value(formatters::s2v_f32_gain_to_db())
@@ -126,7 +126,7 @@ impl Plugin for ReactGain {
                                 match action {
                                     Action::SetGain { value } => {
                                         setter.begin_set_parameter(&params.gain);
-                                        setter.set_parameter_normalized(&params.gain, value);
+                                        setter.set_parameter(&params.gain, value);
                                         setter.end_set_parameter(&params.gain);
                                     }
                                     Action::SetSize { width, height } => {
@@ -153,7 +153,7 @@ impl Plugin for ReactGain {
                     let _ = ctx.send_json(json!({
                         "type": "param_change",
                         "action": "SetGain",
-                        "value": params.gain.unmodulated_normalized_value(),
+                        "value": params.gain.unmodulated_plain_value(),
                         "text": params.gain.to_string()
                     }));
                 }

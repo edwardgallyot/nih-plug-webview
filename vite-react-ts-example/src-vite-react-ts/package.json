@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "inline": "inline-assets dist/index.html ../src-nih-plug/index.html",
     "preview": "vite preview"
   },
   "dependencies": {
