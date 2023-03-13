@@ -5,6 +5,7 @@ use serde::Deserialize;
 use serde_json::json;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
+use crate::FloatRange;
 
 struct ReactGain {
     params: Arc<ReactGainParams>,
@@ -46,16 +47,13 @@ impl Default for ReactGainParams {
             gain: FloatParam::new(
                 "Gain",
                 util::db_to_gain(0.0),
-                FloatRange::Skewed {
-                    min: util::db_to_gain(-60.0),
-                    max: util::db_to_gain(0.0),
-                    factor: FloatRange::gain_skew_factor(-60.0, 0.0),
+                FloatRange::Linear {
+                    min: -60.0,
+                    max: 0.0,
                 },
             )
             .with_smoother(SmoothingStyle::Linear(40.0))
             .with_unit(" dB")
-            .with_value_to_string(formatters::v2s_f32_gain_to_db(2))
-            .with_string_to_value(formatters::s2v_f32_gain_to_db())
             .with_callback(param_callback.clone()),
             gain_value_changed,
         }

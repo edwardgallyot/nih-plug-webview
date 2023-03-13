@@ -21,8 +21,8 @@ function App() {
         size="small"
         defaultValue={0}
         step={0.00000001}
-        min={0.0}
-        max={1.0}
+        min={-60.0}
+        max={0.0}
         value={gain}
         valueLabelDisplay="auto"
         onChange={(e: Event, v: number | number[], t: number) => { updateGain(v as number)}}
